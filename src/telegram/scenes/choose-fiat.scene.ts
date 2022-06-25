@@ -21,10 +21,13 @@ export class ChooseFiatCurrencyScene {
 
   @Action(/USD|RUB/)
   async onAnswer(@Ctx() ctx: MySceneActionContext) {
-    const cbQuery = ctx.update.callback_query;
-    const userAnswer = 'data' in cbQuery ? cbQuery.data : null;
+    const userAnswer = ctx.update.callback_query.data;
 
+    // Это и была наша цель. После выполнения кода ниже, данные
+    // сохраняться в базе и мы в любой момент времени сможем определить
+    // что, как и где делал пользователь
     ctx.session.choosen_fiat_currency = userAnswer;
+
     await ctx.scene.enter(SCENE_CHOOSE_CRYPTO_CURRENCY);
   }
 }

@@ -4,7 +4,7 @@ import { SceneContext } from 'telegraf/typings/scenes';
 
 interface SessionData {
   choosen_fiat_currency?: string;
-  last_message_id: number;
+  choosen_crypto_currency?: string;
 }
 
 export interface UserSessionContext extends Context {

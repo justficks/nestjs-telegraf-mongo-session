@@ -33,17 +33,12 @@ export class ChooseCryptoCurrencyScene {
   async onAnswer(@Ctx() ctx: MySceneActionContext) {
     const userAnswer = ctx.update.callback_query.data;
 
-    switch (userAnswer) {
-      case 'BTC':
-        ctx.editMessageText('BTC кошелек для пополнения');
-        break;
-      case 'ETH':
-        ctx.editMessageText('ETH кошелек для пополнения');
-        break;
-      case 'USDT':
-        ctx.editMessageText('USDT кошелек для пополнения');
-        break;
-    }
+    ctx.session.choosen_crypto_currency = userAnswer;
+
+    const message =
+      'Вот, держи данные сессии: ' + JSON.stringify(ctx.session, null, 3);
+
+    await ctx.editMessageText(message);
 
     await ctx.scene.leave();
   }
