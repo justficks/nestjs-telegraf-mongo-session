@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Middleware } from 'telegraf';
@@ -15,25 +15,33 @@ export class SessionService {
   ) {}
 
   async getSession(userId: number): Promise<SceneContext['session']> {
-    const user = await this.telegramSessionModel.findOne({ userId });
-    if (user) {
-      return user.session;
-    } else {
-      return EMPTY_SESSION;
+    try {
+      const user = await this.telegramSessionModel.findOne({ userId });
+      if (user) {
+        return user.session;
+      } else {
+        return EMPTY_SESSION;
+      }
+    } catch (e) {
+      Logger.error(e);
     }
   }
 
   async saveSession(session: SceneContext['session'], userId: number) {
-    const user = await this.telegramSessionModel.findOne({ userId });
-    if (user) {
-      user.session = session;
-      await user.save();
-    } else {
-      const newUser = new this.telegramSessionModel({
-        userId,
-        session,
-      });
-      await newUser.save();
+    try {
+      const user = await this.telegramSessionModel.findOne({ userId });
+      if (user) {
+        user.session = session;
+        await user.save();
+      } else {
+        const newUser = new this.telegramSessionModel({
+          userId,
+          session,
+        });
+        await newUser.save();
+      }
+    } catch (e) {
+      Logger.error(e);
     }
   }
 

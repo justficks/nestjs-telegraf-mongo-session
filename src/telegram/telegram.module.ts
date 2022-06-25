@@ -3,10 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { SessionModule } from '../session/session.module';
 import { SessionService } from '../session/session.service';
-import {
-  ChooseCryptoCurrencyScene,
-  ChooseFiatCurrencyScene,
-} from './scenes/buy.scene';
+import { ChooseCryptoCurrencyScene } from './scenes/choose-crypto.scene';
+import { ChooseFiatCurrencyScene } from './scenes/choose-fiat.scene';
 import { TelegramService } from './telegram.service';
 import { TelegramUpdate } from './telegram.update';
 
@@ -30,7 +28,3 @@ import { TelegramUpdate } from './telegram.update';
   ],
 })
 export class TelegramModule {}
-
-// TelegrafModule.forRoot({
-//   token: process.env.TG_TOKEN,
-// }),
